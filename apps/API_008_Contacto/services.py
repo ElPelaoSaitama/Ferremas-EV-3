@@ -32,10 +32,8 @@ def create_contacto(nombre, email, telefono, mensaje, asunto):
     )
 
 def get_contacto(contacto_id):
-    try:
-        return Contacto.objects.get(id=contacto_id)
-    except Contacto.DoesNotExist:
-        raise ObjectDoesNotExist("El contacto con el ID especificado no existe.")
+    return Contacto.objects.get(id=contacto_id)
+
 
 def update_contacto(contacto_id,nombre, email, telefono, mensaje, asunto):
     contacto = Contacto.objects.get(id=contacto_id)
@@ -49,3 +47,13 @@ def update_contacto(contacto_id,nombre, email, telefono, mensaje, asunto):
 
 def delete_contacto(contacto):
     contacto.delete()
+
+
+
+    """
+    def get_contacto(contacto_id):
+    try:
+        return Contacto.objects.get(id=contacto_id)
+    except Contacto.DoesNotExist:
+        raise ObjectDoesNotExist("El contacto con el ID especificado no existe.")
+    """
