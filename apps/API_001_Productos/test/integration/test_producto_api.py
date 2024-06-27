@@ -26,7 +26,7 @@ class TestProductoAPI:
         url = reverse('crear-producto')
 
         data = {
-            'nombre': 'aa',
+            'nombre': 'sdsdsdsdsd',
             'precio': 1,
             'descripcion': 'descripcion',
             'nuevo': True,

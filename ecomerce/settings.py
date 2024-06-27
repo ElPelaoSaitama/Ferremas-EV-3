@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'apps.API_007_InventarioLocal',
     'apps.API_008_Contacto',
     'apps.API_009_User',
+    'apps.Web_Ferremas',
 
 ]
 

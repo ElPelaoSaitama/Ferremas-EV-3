@@ -27,7 +27,8 @@ urlpatterns = [
     path('api/user/', include('apps.API_009_User.urls')),
     path('api/locales/',include('apps.API_006_Locales.urls')),
     path('api/inventario/', include('apps.API_007_InventarioLocal.urls')),
-    path('api/contacto/', include('apps.API_008_Contacto.urls'))
+    path('api/contacto/', include('apps.API_008_Contacto.urls')),
+    path('', include('apps.Web_Ferremas.urls')),
 ]
 
 if settings.DEBUG:
