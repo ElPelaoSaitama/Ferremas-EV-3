@@ -9,7 +9,7 @@ def get_asunto(asunto_id):
     try:
         return Asunto.objects.get(id=asunto_id)
     except Asunto.DoesNotExist:
-        raise ObjectDoesNotExist("La marca con el ID especificado no existe.")
+        raise ObjectDoesNotExist("El asunto con el ID especificado no existe.")
 
 def update_asunto(asunto, nombre=None):
     if nombre:
@@ -32,7 +32,10 @@ def create_contacto(nombre, email, telefono, mensaje, asunto):
     )
 
 def get_contacto(contacto_id):
-    return Contacto.objects.get(id=contacto_id)
+    try:
+        return Contacto.objects.get(id=contacto_id)
+    except Contacto.DoesNotExist:
+        raise ObjectDoesNotExist("El contacto con el ID especificado no existe.")
 
 def update_contacto(contacto_id,nombre, email, telefono, mensaje, asunto):
     contacto = Contacto.objects.get(id=contacto_id)

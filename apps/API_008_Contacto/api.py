@@ -23,7 +23,7 @@ class AsuntoDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
             serializer = AsuntoSerializers(marca)
             return Response(serializer.data)
         except ObjectDoesNotExist as e:
-            return Response({"detail": str(e)}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"detalle": str(e)}, status=status.HTTP_404_NOT_FOUND)
 
     def perform_update(self, serializer):
         update_asunto(serializer.instance, **serializer.validated_data)
@@ -45,8 +45,13 @@ class ContactoDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Contacto.objects.all()
     serializer_class = ContactoSerializers
 
-    def get_object(self):
-        return get_contacto(self.kwargs['pk'])
+    def get(self, request, pk , format=None):
+        try:
+            contacto = get_contacto(pk)
+            serializer = ContactoSerializers(contacto)
+            return Response(serializer.data)
+        except ObjectDoesNotExist as e:
+            return Response({"Detalle": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
     def perform_update(self, serializer):
         update_contacto(serializer.instance, **serializer.validated_data)
