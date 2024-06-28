@@ -20,7 +20,7 @@
     ```
 ## Pruebas con Pytest
 
-Para iniciar las pruebas, usa:
+Para realizar las pruebas, usa:
 ```sh
 pytest -v
 ```
