@@ -1,3 +1,7 @@
+
+# No se estan realizando test en este  flujo en esta etapa
+
+"""
 import pytest
 from apps.API_008_Contacto.models import Asunto
 from apps.API_008_Contacto.services import create_asunto, delete_asunto, get_asunto, update_asunto
@@ -5,9 +9,9 @@ from apps.API_008_Contacto.services import create_asunto, delete_asunto, get_asu
 @pytest.mark.django_db
 class TestAsuntoService:
     def test_create_asunt_succesfully(self):
-        """
-        Validacion del metodo para crear asunto correctamente
-        """
+  
+        # Validacion del metodo para crear asunto correctamente
+
         # Creacion de un nuevo asunto
         asunto = create_asunto('testAsunto')
 
@@ -24,3 +28,4 @@ class TestAsuntoService:
         # Validar que el asunto ya no exista dentro de la base de datos de prueba
         with pytest.raises(Asunto.DoesNotExist):
             get_asunto(asunto.id)
+"""

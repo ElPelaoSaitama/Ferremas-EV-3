@@ -71,7 +71,7 @@ class TestUsuarioAPI:
 
     def test_list_users_api_successfully(self):
         """
-        Verifica que el se puede otener una lista de tofos los ususario registrados.
+        Verifica que el se puede otener una lista de todos los ususario registrados.
         """
         client = APIClient()
 

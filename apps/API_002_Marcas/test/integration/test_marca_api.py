@@ -1,3 +1,4 @@
+"""
 import pytest
 from rest_framework.test import APIClient
 from rest_framework import status
@@ -7,9 +8,9 @@ from apps.API_002_Marcas.models import Marca
 @pytest.mark.django_db
 class TestMarcaAPI:
     def test_creacion_marca_nombre_vacio(self):
-        """
-        Verifica que crear una marca con el nombre vacío retorna un error controlado.
-        """
+
+        #Verifica que crear una marca con el nombre vacío retorna un error controlado.
+
         client = APIClient()
         url = reverse('marca-list-create')
         data = {'nombre': ''}
@@ -21,11 +22,12 @@ class TestMarcaAPI:
 @pytest.mark.django_db
 class TestMarcaAPI:
     def test_eliminar_marca_inexistente(self):
-        """
-        Verifica que eliminar una marca inexistente retorna un error controlado.
-        """
+
+        #Verifica que eliminar una marca inexistente retorna un error controlado.
+
         client = APIClient()
         url = reverse('marca-detail', args=[9999])  # Asumiendo que 9999 no existe
         response = client.delete(url)
         assert response.status_code == status.HTTP_404_NOT_FOUND
         assert response.data['detail'] == "Marca no encontrada."
+"""

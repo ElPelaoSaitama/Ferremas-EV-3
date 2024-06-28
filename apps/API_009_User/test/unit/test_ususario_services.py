@@ -8,9 +8,7 @@ from apps.API_009_User.services import create_user, delete_user, get_user, updat
 class TestUsuarioService:
     def test_create_user_succesfully(self):
         """
-        Se recomienda colocar una descripción de lo que debe realizar la prueba, 
-        para este caso vamos a validar que el método crear usuario funcione correctamente, 
-        adicionalmente, si desean, pueden agregar comentarios del paso a paso
+        validar que el método crear usuario funcione correctamente.
         """
         # Creamos un usuario nuevo
         user = create_user('testuser', 'testpassword')
@@ -22,6 +20,9 @@ class TestUsuarioService:
         assert user.check_password('testpassword') is True
         
     def test_delete_user_successfully(self):
+        """
+        Validar que el metodo delete_user funcione correctamente.
+        """
         # Creamos un usuario nuevo para eliminarlo posteriormente
         user = create_user('testuser', 'testpassword')
 
