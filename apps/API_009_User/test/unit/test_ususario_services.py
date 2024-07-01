@@ -1,8 +1,8 @@
 import pytest
 from django.contrib.auth.models import User
 
-from apps.API_009_User.services import create_user, delete_user, get_user, update_user
-
+from apps.API_009_User.services import create_user, delete_user, get_user, update_user, dell_user
+from django.core.exceptions import ObjectDoesNotExist
 
 @pytest.mark.django_db
 class TestUsuarioService:
@@ -62,7 +62,7 @@ class TestUsuarioService:
         user = create_user('testuser', 'testpassword')
 
         # Actualizamos el username del usuario
-        updated_user = update_user(user, username='updateduser')
+        updated_user = update_user(user.id, username='updateduser')
 
         # Verificamos que el username haya sido actualizado
         assert updated_user.username == 'updateduser'
@@ -75,10 +75,8 @@ class TestUsuarioService:
         user = create_user('testuser', 'testpassword')
 
         # Actualizamos el usuario sin hacer cambios
-        updated_user = update_user(user)
-
-        # Verificamos que el username siga siendo el mismo
-        assert updated_user.username == 'testuser'
+        with pytest.raises(ValueError):
+            update_user(user.id)
 
     def test_delete_user_not_exist(self):
         """
@@ -86,7 +84,7 @@ class TestUsuarioService:
         """
         # Creamos un usuario nuevo y lo eliminamos
         user = create_user('testuser', 'testpassword')
-        delete_user(user)
+        dell_user(user.id)
 
         # Intentamos eliminar nuevamente el mismo usuario
         with pytest.raises(User.DoesNotExist):
@@ -96,10 +94,6 @@ class TestUsuarioService:
         """
         Validar que el método actualizar usuario maneje el caso de usuario no existente.
         """
-        # Creamos un usuario nuevo y lo eliminamos
-        user = create_user('testuser', 'testpassword')
-        delete_user(user)
-
-        # Intentamos actualizar el usuario eliminado
-        with pytest.raises(User.DoesNotExist):
-            update_user(user, username='newusername')
+        # Intentamos actualizar un usuario que no existe
+        with pytest.raises(ObjectDoesNotExist):
+            update_user(9999, username='newusername')

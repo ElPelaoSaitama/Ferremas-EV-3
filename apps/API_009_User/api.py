@@ -26,11 +26,11 @@ class UserDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
             return UserUpdateSerializer
         return self.serializer_class
     
-    #def perform_update(self, serializer):
-    #    update_user(serializer.instance, **serializer.validated_data)
+    def perform_update(self, serializer):
+        update_user(serializer.instance, **serializer.validated_data)
     
-    #def perform_destroy(self, instance):
-    #    delete_user(instance)
+    def perform_destroy(self, instance):
+        delete_user(instance)
     
     def delete(self, request, pk, format=None):
         try:
@@ -43,18 +43,28 @@ class UserDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     def put(self, request, pk, format=None):
         try:
             user = update_user(pk, **request.data)
+            if isinstance(user, str):
+                return Response({"message": user}, status=status.HTTP_400_BAD_REQUEST)
+            
             serializer = self.get_serializer(user)
             return Response(serializer.data)
         except ObjectDoesNotExist as e:
             return Response({"Detalle": str(e)}, status=status.HTTP_404_NOT_FOUND)
+        except ValueError as e:
+            return Response({"Detalle": str(e)}, status=status.HTTP_400_BAD_REQUEST)
     
     def patch(self, request, pk, format=None):
         try:
             user = update_user(pk, **request.data)
+            if isinstance(user, str):
+                return Response({"message": user}, status=status.HTTP_400_BAD_REQUEST)
+            
             serializer = self.get_serializer(user)
             return Response(serializer.data)
         except ObjectDoesNotExist as e:
-            return Response({"Detalle": str(e)}, status=status.HTTP_404_NOT_FOUND)    
+            return Response({"Detalle": str(e)}, status=status.HTTP_404_NOT_FOUND)
+        except ValueError as e:
+            return Response({"Detalle": str(e)}, status=status.HTTP_400_BAD_REQUEST)  
         
 
 class UserListAPIView(generics.ListAPIView):

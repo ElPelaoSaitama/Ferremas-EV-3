@@ -13,10 +13,19 @@ def get_user(user_id):
 def update_user(user_id, **kwargs):
     try:
         user = User.objects.get(id=user_id)
+        updated = False
+
         for key, value in kwargs.items():
-            setattr(user, key, value)
+            if getattr(user, key) != value:
+                setattr(user, key, value)
+                updated = True
+
+        if not updated:
+            raise ValueError("No se detectaron cambios en el usuario.")
+
         user.save()
         return user
+
     except User.DoesNotExist:
         raise ObjectDoesNotExist(f"El usuario con ID {user_id} no existe en la base de datos.")
 
