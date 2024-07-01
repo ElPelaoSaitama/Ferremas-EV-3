@@ -19,3 +19,7 @@ class UserUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['username']
+
+class UserSerializer(serializers.ModelSerializer):
+    model = User
+    fields = '__all__'

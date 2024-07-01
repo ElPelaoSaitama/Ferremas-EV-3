@@ -1,8 +1,12 @@
 from rest_framework import generics
 from django.contrib.auth.models import User
 
-from .serializers import UserRegistrationSerializer, UserUpdateSerializer
-from .services import delete_user, get_user, update_user
+
+from .serializers import UserRegistrationSerializer, UserUpdateSerializer, UserSerializer
+from .services import delete_user, get_user, update_user, dell_user
+from django.core.exceptions import ObjectDoesNotExist
+from rest_framework.response import Response
+from rest_framework import status
 
 
 class UserCreateAPIView(generics.CreateAPIView):
@@ -25,8 +29,16 @@ class UserDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     def perform_update(self, serializer):
         update_user(serializer.instance, **serializer.validated_data)
     
-    def perform_destroy(self, instance):
-        delete_user(instance)
+    #def perform_destroy(self, instance):
+    #    delete_user(instance)
+    
+    def delete(self, request, pk, format=None):
+        try:
+            user = dell_user(pk)
+            serializer = self.get_serializer(user)
+            return Response(serializer.data)
+        except ObjectDoesNotExist as e:
+            return Response({"Detalle": str(e)}, status=status.HTTP_404_NOT_FOUND)
         
 
 class UserListAPIView(generics.ListAPIView):
