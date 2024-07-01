@@ -66,7 +66,7 @@ class TestUsuarioAPI:
 
         response = client.delete(url)
 
-        assert response.status_code == status.HTTP_204_NO_CONTENT
+        assert response.status_code == status.HTTP_200_OK
         assert not User.objects.filter(pk=user.pk).exists()
 
     def test_list_users_api_successfully(self):
