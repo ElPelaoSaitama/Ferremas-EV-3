@@ -10,15 +10,15 @@ def create_user(username, password):
 def get_user(user_id):
     return User.objects.get(id=user_id)
 
-def update_user(user, username=None):
-    if not User.objects.filter(pk=user.pk).exists():
-        raise User.DoesNotExist("User does not exist.")
-    
-    if username:
-        user.username = username
-    
-    user.save()
-    return user
+def update_user(user_id, **kwargs):
+    try:
+        user = User.objects.get(id=user_id)
+        for key, value in kwargs.items():
+            setattr(user, key, value)
+        user.save()
+        return user
+    except User.DoesNotExist:
+        raise ObjectDoesNotExist(f"El usuario con ID {user_id} no existe en la base de datos.")
 
 def delete_user(user):
     if not User.objects.filter(pk=user.pk).exists():

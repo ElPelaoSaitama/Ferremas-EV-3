@@ -26,8 +26,8 @@ class UserDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
             return UserUpdateSerializer
         return self.serializer_class
     
-    def perform_update(self, serializer):
-        update_user(serializer.instance, **serializer.validated_data)
+    #def perform_update(self, serializer):
+    #    update_user(serializer.instance, **serializer.validated_data)
     
     #def perform_destroy(self, instance):
     #    delete_user(instance)
@@ -39,6 +39,22 @@ class UserDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
             return Response(serializer.data)
         except ObjectDoesNotExist as e:
             return Response({"Detalle": str(e)}, status=status.HTTP_404_NOT_FOUND)
+
+    def put(self, request, pk, format=None):
+        try:
+            user = update_user(pk, **request.data)
+            serializer = self.get_serializer(user)
+            return Response(serializer.data)
+        except ObjectDoesNotExist as e:
+            return Response({"Detalle": str(e)}, status=status.HTTP_404_NOT_FOUND)
+    
+    def patch(self, request, pk, format=None):
+        try:
+            user = update_user(pk, **request.data)
+            serializer = self.get_serializer(user)
+            return Response(serializer.data)
+        except ObjectDoesNotExist as e:
+            return Response({"Detalle": str(e)}, status=status.HTTP_404_NOT_FOUND)    
         
 
 class UserListAPIView(generics.ListAPIView):
