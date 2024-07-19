@@ -28,6 +28,8 @@ urlpatterns = [
     path('api/locales/',include('apps.API_006_Locales.urls')),
     path('api/inventario/', include('apps.API_007_InventarioLocal.urls')),
     path('api/contacto/', include('apps.API_008_Contacto.urls')),
+    path('api/orden/', include('apps.API_005_Orden.urls')),
+    path('api/carrito/', include('apps.API_004_Carrito.urls')),
     path('', include('apps.Web_Ferremas.urls')),
 ]
 
